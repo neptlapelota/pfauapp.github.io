@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Cognito OAuth Callback</title>
+<style>
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: Arial, sans-serif;
+    padding: 30px;
+  }
+  pre {
+    background: #161b22;
+    padding: 20px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+</style>
+</head>
+<body>
+<h2>PfauApp – OAuth Callback</h2>
+<p>Parâmetros recebidos:</p>
+<pre id="output">Carregando...</pre>
+
+<script>
+  function parseParams() {
+    // 1 — query params (?code=123)
+    const query = Object.fromEntries(new URLSearchParams(window.location.search));
+
+    // 2 — fragment params (#id_token=abc)
+    let hashParams = {};
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      hashParams = Object.fromEntries(new URLSearchParams(hash));
+    }
+
+    const all = { query, hash: hashParams };
+
+    document.getElementById("output").textContent =
+      JSON.stringify(all, null, 2);
+  }
+
+  parseParams();
+</script>
+</body>
+</html>
